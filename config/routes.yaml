@@ -1,3 +1,20 @@
+swagger_ui:
+  path: /api/docs
+  controller: api_platform.swagger.action.ui
+api_login_check:
+  path: /api/login
+api_refresh_token:
+  path: /api/token/refresh
+  controller: gesdinet.jwtrefreshtoken::refresh
+
+admin:
+  path: /admin/{reactRouting}
+  controller: App\Controller\AdminController::index
+  defaults:
+    reactRouting: null
+  requirements:
+    reactRouting: '.*'
+
 app:
   path: /{reactRouting}
   controller: App\Controller\AppController::index

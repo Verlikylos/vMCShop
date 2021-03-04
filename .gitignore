@@ -339,3 +339,7 @@ composer.phar
 # Local History for Visual Studio Code
 .history/
 
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

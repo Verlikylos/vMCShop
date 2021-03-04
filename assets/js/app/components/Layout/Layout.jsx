@@ -1,94 +1,66 @@
 import React from 'react';
+import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
-import '@fontsource/roboto';
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
-import {
-  createMuiTheme,
-  ThemeProvider as MuiThemeProvider,
-  StylesProvider,
-} from '@material-ui/core/styles';
+import { Layout as BaseLayout, Menu, Breadcrumb } from 'antd';
+import { Container } from '@common/components/Container';
 
-import { Container, Paper } from '@material-ui/core';
+import { colors } from '@utils';
 
-import { BaseLayout } from '@app/components/Layout';
-import { Navigation } from '@app/components/Navigation';
-import { Header } from '@app/components/Header';
-import { Footer } from '@app/components/Footer';
+import background from '@images/header-background.png';
+import logo from '@images/logo.png';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: #e5e5e5;
-  }
+const { Header, Content, Footer } = BaseLayout;
 
-  .mr-1 {
-    margin-right: 0.25rem;
-  }
-  .mr-2 {
-    margin-right: 0.5rem;
-  }
-  .mr-3 {
-    margin-right: 0.75rem;
-  }
-  .mr-4 {
-    margin-right: 0.1rem;
-  }
-  .mr-5 {
-    margin-right: 1.5rem;
-  }
+const StyledLogo = styled.img`
+  width: 300px;
+  margin: 1rem 0;
 `;
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#2c3e50',
-    },
-    secondary: {
-      main: '#008f92',
-    },
-    success: {
-      main: '#38b892',
-    },
-    error: {
-      main: '#e74c3c',
-    },
-    warning: {
-      main: '#f39c12',
-    },
-    info: {
-      main: '#046092',
-    },
+const StyledHeader = styled(Header)`
+  height: 66px;
 
-    tonalOffset: 0.1,
-  },
-});
+  padding: 0 1rem;
 
-const StyledPaper = styled(Paper)`
-  min-height: 150vh;
+  background-color: ${colors.primary};
+`;
 
-  margin: -2rem 1rem 0;
-  padding: 3rem 1rem;
+const StyledMenu = styled(Menu)`
+  background-color: ${colors.primary};
+  border-bottom: 1px ${colors.primary} solid;
 `;
 
 const Layout = ({ children }) => (
-  <BaseLayout pageTitle="Test">
-    <GlobalStyle />
+  <>
+    <Helmet
+      style={[
+        {
+          cssText: `
+            body {
+                background-image: url('${background}');
+            }
+        `,
+        },
+      ]}
+    />
 
-    <MuiThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
-        <StylesProvider injectFirst>
-          <Navigation />
-
-          <Header />
-
-          <StyledPaper elevation={3}>
-            <Container>{children}</Container>
-          </StyledPaper>
-
-          <Footer />
-        </StylesProvider>
-      </ThemeProvider>
-    </MuiThemeProvider>
-  </BaseLayout>
+    <Container>
+      <BaseLayout style={{ background: 'transparent' }}>
+        <StyledLogo src={logo} alt="logo" />
+        <StyledHeader>
+          <StyledMenu mode="horizontal" defaultSelectedKeys={['1']}>
+            <Menu.Item key="1">Strona Główna</Menu.Item>
+          </StyledMenu>
+        </StyledHeader>
+        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+          {children}
+        </Content>
+        <Footer>
+          Proudly powered by <a href="#">vMCShop</a> v5.0.0
+        </Footer>
+      </BaseLayout>
+    </Container>
+  </>
 );
 
 export default Layout;
